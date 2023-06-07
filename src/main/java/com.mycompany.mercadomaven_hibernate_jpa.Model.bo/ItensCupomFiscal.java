@@ -1,16 +1,37 @@
 
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
-public class ItensCupomFiscal {
+
+@Entity
+public class ItensCupomFiscal implements Serializable {
+       
+       @Id
+       @GeneratedValue(strategy = GenerationType.IDENTITY)
        private int id;
+       @Column
        private float qtdProduto;
+       @Column
        private float valorUnitarioProduto;
+       @Column
        private char Status;
        
-   
+       @JoinColumn
+       @ManyToOne
        private Produto produto;
+       
+       @JoinColumn
+       @ManyToOne
        private HistoricoMovimentacao historicoMovimentacao;
+       
        
        
     public ItensCupomFiscal() {

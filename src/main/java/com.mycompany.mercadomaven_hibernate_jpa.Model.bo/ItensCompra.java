@@ -1,12 +1,33 @@
 
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
-public class ItensCompra {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import org.eclipse.persistence.sessions.serializers.Serializer;
+
+
+@Entity
+public class ItensCompra implements Serializable {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private float qtdProduto;
+    @Column
     private float privateUnitarioProduto;
+    
+    @Column
     private char status;
 
+    @JoinColumn
+    @ManyToOne
     private HistoricoMovimentacao historicoMovimentacao;
     
     public ItensCompra() {

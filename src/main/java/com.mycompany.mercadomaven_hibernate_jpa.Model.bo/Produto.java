@@ -1,32 +1,62 @@
-
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-public class Produto {
+@Entity
+public class Produto implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private String descricao;
+    @Column
     private float valorCompra;
+    @Column
     private float valorVenda;
+    @Column
     private String undVenda;
+    @Column
     private String undCompra;
+    @Column
     private int fatorConversao;
+    @Column
     private char status;
+    @Column
+    @Temporal(TemporalType.DATE)
     private String dataCadastro;
+    @Column
     private String barraEntrada;
+    @Column
     private String barraSaida;
+    @Column
     private float estoqueMinimo;
+    @Column
     private float estoqueMaximo;
 
+    @JoinColumn
+    @ManyToOne
     private Classe classe;
-    
+
+    @JoinColumn
+    @ManyToOne
     private Marca marca;
-    
+
+    @JoinColumn
+    @ManyToOne
     private HistoricoMovimentacao historicoMovimentacao;
-    
-    
-    
-    public Produto(int id, String descricao, float valorCompra, float valorVenda, String undVenda,String undCompra, int fatorConversao, char status, String dataCadastro, String barraEntrada, String barraSaida, float estoqueMinimo, float estoqueMaximo) {
+
+    public Produto(int id, String descricao, float valorCompra, float valorVenda, String undVenda, String undCompra, int fatorConversao, char status, String dataCadastro, String barraEntrada, String barraSaida, float estoqueMinimo, float estoqueMaximo) {
         this.id = id;
         this.descricao = descricao;
         this.valorCompra = valorCompra;
@@ -43,7 +73,7 @@ public class Produto {
     }
 
     public Produto() {
-        
+
     }
 
     public String getUndCompra() {
@@ -54,7 +84,6 @@ public class Produto {
         this.undCompra = undCompra;
     }
 
-    
     public int getId() {
         return id;
     }
@@ -167,12 +196,9 @@ public class Produto {
         this.marca = marca;
     }
 
-    
-    
     @Override
     public String toString() {
         return "Produto{" + "id=" + id + ", descricao=" + descricao + ", valorCompra=" + valorCompra + ", valorVenda=" + valorVenda + ", undVenda=" + undVenda + ", fatorConversao=" + fatorConversao + ", status=" + status + ", dataCadastro=" + dataCadastro + ", barraEntrada=" + barraEntrada + ", barraSaida=" + barraSaida + ", estoqueMinimo=" + estoqueMinimo + ", estoqueMaximo=" + estoqueMaximo + '}';
     }
-    
-    
+
 }

@@ -1,8 +1,19 @@
 
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class Marca {
+@Entity
+public class Marca implements Serializable {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private String descricao;
 
     public Marca() {

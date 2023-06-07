@@ -1,20 +1,48 @@
 
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-public class Compra {
+@Entity
+public class Compra implements Serializable{
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
+    @Temporal(TemporalType.DATE)
     private Date dataCompra;
+    @Column
+    @Temporal(TemporalType.TIME)
     private String horaCompra;
+    @Column
     private String numeroNF;
+    @Column
     private String tipoNF;
+    @Column
     private float valorDesconto;
+    @Column
     private float valorAcrescimo;
+    @Column
     private float totalNF;
+    @Column
     private char status;
-
+    
+    @JoinColumn
+    @ManyToOne
     private ItensCompra itensCompra;
+    
+    @JoinColumn
+    @ManyToOne
     private Pagar pagar;
     
     public Compra() {

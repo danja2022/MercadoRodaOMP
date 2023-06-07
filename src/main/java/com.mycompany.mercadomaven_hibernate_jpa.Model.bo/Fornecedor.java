@@ -1,18 +1,30 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-
+@Entity
 public class Fornecedor extends Pessoa {
    
+    
+    @Column
     private String cnpj;
+    @Column
     private String inscEstadual;
+    @Column
     private String contato;
+    @Column
     private String razaoSocial;
+    @Column
     private String cpf;
+    @Column
     private String rg;
 
-    
+    @JoinColumn
+    @ManyToOne
     private Compra compra;
     
     public Fornecedor() {

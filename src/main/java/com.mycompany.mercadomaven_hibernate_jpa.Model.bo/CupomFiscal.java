@@ -1,16 +1,40 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-public class CupomFiscal {
+@Entity
+public class CupomFiscal implements Serializable {
+    
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
+    @Temporal (TemporalType.DATE)
     private Date dataVenda;
+    @Column
+    @Temporal(TemporalType.DATE)
     private String horaVenda;
+    @Column
     private float valorDesconto;
+    @Column
     private float valorAcrescimo;
+    @Column
     private float totalCupom;
+    @Column
     private char status;
 
+    @JoinColumn
+    @ManyToOne
     private ItensCupomFiscal itensCupomFiscal;
     
     public CupomFiscal() {

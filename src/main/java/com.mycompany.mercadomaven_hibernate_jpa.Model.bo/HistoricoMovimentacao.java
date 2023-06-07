@@ -1,16 +1,36 @@
 
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-public class HistoricoMovimentacao {
+@Entity
+public class HistoricoMovimentacao implements Serializable{
+    
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private Date data;
+    @Column
     private String hora;
+    @Column
     private char tipo;
+    @Column
     private float qtd;
+    @Column
     private char status;
 
+    
+    @JoinColumn
+    @ManyToOne
     private ItensCompra itensCompra;
     
     

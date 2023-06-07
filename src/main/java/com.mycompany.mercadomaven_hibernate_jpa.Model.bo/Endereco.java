@@ -1,12 +1,32 @@
 
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
-public class Endereco {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Endereco implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private String logradouro;
+    @Column
     private String cep;
+    
+    @JoinColumn
+    @ManyToOne
     private Bairro bairro;
+    
+    @JoinColumn
+    @ManyToOne
     private Cidade cidade;
 
     public Endereco() {

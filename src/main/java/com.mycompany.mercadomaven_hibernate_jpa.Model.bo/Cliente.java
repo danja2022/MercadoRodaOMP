@@ -1,12 +1,19 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
+@Entity
 public class Cliente extends Pessoa {
 
+    @Column
     private String cpf;
+    @Column
     private String rg;  //string
+    @Column
     private char sexo;
+    @Column
     private String dtNascimento;
 
     public Cliente() {

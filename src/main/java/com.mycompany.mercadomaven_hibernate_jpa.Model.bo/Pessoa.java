@@ -1,5 +1,6 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -13,13 +14,13 @@ import javax.persistence.TemporalType;
 
 
 @MappedSuperclass
-public abstract class Pessoa {
+public abstract class Pessoa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String nome;
-    @Column
     private int id;
+    @Column
+    private String nome;
     @Column
     private String fone;
     @Column
@@ -35,6 +36,8 @@ public abstract class Pessoa {
     private String observacao;
     @Column
     private char status;
+    
+    
     @JoinColumn
     @ManyToOne
     private Endereco endereco; //endereco

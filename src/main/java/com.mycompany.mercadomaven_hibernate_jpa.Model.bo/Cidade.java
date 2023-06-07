@@ -9,9 +9,11 @@ import javax.persistence.Id;
 
 @Entity
 public class Cidade implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
     @Column
     private String descricao;
 

@@ -1,15 +1,39 @@
-
 package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 
+import java.io.Serializable;
 import java.util.Date;
-public class Pagamento {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+public class Pagamento implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
+    @Column
+    @Temporal(TemporalType.DATE)
     private Date dataPagamento;
+    @Column
+    @Temporal(TemporalType.TIME)
     private String horaPagamento;
+    @Column
     private float valorDesconto;
+    @Column
     private float valorAcrescimo;
+    @Column
     private float valorPago;
+    
+    @Column
     private char status;
+    
+    
 
     public Pagamento() {
     }
@@ -84,7 +108,5 @@ public class Pagamento {
     public String toString() {
         return "Pagamento{" + "id=" + id + ", dataPagamento=" + dataPagamento + ", horaPagamento=" + horaPagamento + ", valorDesconto=" + valorDesconto + ", valorAcrescimo=" + valorAcrescimo + ", valorPago=" + valorPago + ", status=" + status + '}';
     }
-    
-    
-    
+
 }

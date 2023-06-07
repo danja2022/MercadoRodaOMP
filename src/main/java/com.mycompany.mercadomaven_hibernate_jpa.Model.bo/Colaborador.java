@@ -4,12 +4,17 @@ package com.mycompany.mercadomaven_hibernate_jpa.Model.bo;
 //import java.util.Date;
 
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
-
+@Entity
 public class Colaborador extends Pessoa {
     
+    @Column
     private String login;
+    @Column
     private String senha;
+    
     
     
     private CupomFiscal cupomFiscal;
