@@ -10,53 +10,54 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.ConnectionFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class CidadeDAO implements InterfaceDAO<Cidade> {
 
+    private static CidadeDAO instance;
+    protected EntityManager entityManager;
+
+    public static CidadeDAO getInstance() {
+        if (instance == null) {
+            instance = new CidadeDAO();
+        }
+        return instance;
+    }
+
+    private CidadeDAO() {
+        entityManager = getEntityManager();
+    }
+
+    private EntityManager getEntityManager() {
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("Mercado_PU");
+        if (entityManager == null) {
+            entityManager = factory.createEntityManager();
+        }
+        return entityManager;
+    }
+
     @Override
     public void create(Cidade objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "INSERT INTO cidade (descricao) VALUES (?)";
-        PreparedStatement pstm = null;
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, objeto.getDescricao());
-            pstm.executeUpdate();
+            entityManager.getTransaction().begin();
+            entityManager.persist(objeto);
+            entityManager.getTransaction().commit();
 
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+
         }
-        ConnectionFactory.closeConnection(conexao, pstm);
     }
 
     @Override
     public Cidade retrieve(int codigo) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, descricao FROM cidade WHERE id = ?";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setInt(1, codigo);
-            rst = pstm.executeQuery();
-            Cidade cidade = new Cidade();
-
-            while (rst.next()) {
-                cidade.setId(codigo);
-                cidade.setDescricao(rst.getString("descricao"));
-
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return cidade;
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return null;
-        }
+        Cidade cidade;
+        cidade = entityManager.find(Cidade.class, codigo);
+        return cidade;
     }
 
     @Override
@@ -91,72 +92,38 @@ public class CidadeDAO implements InterfaceDAO<Cidade> {
 
     @Override
     public List<Cidade> retrieve() {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, descricao FROM cidade";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        List<Cidade> listaCidade = new ArrayList<>();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                Cidade cidade = new Cidade();
-                cidade.setId(rst.getInt("id"));
-                cidade.setDescricao(rst.getString("descricao"));
-                listaCidade.add(cidade);
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return listaCidade;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return null;
-        }
+        List<Cidade> cidades;
+        cidades = entityManager.createQuery("SELECT c FROM  cidade c", Cidade.class).getResultList();
+        return cidades;
 
     }
 
     @Override
     public void update(Cidade objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "UPDATE cidade SET descricao = ? WHERE id = ?";
-        PreparedStatement pstm = null;
+       try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(objeto);
+            entityManager.getTransaction().commit();
 
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-
-            pstm.setString(1, objeto.getDescricao());
-
-            pstm.setInt(2, objeto.getId());
-            pstm.executeUpdate();
-
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+
         }
-        ConnectionFactory.closeConnection(conexao, pstm);
     }
 
     @Override
     public int delete(Cidade objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "DELETE FROM cidade WHERE id = ?";
-        PreparedStatement pstm = null;
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setInt(1, objeto.getId());
-            pstm.executeUpdate();
-            ConnectionFactory.closeConnection(conexao, pstm);
-            return 0;
-        } catch (SQLException ex) {
+     try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(objeto);
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
-            ConnectionFactory.closeConnection(conexao, pstm);
-            return -1;
+            entityManager.getTransaction().rollback();
+           
         }
-        
+         return -1;
 
     }
 

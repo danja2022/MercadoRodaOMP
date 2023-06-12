@@ -1,5 +1,6 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Model.DAO;
 
+import com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Bairro;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Classe;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,53 +8,55 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class ClasseDAO implements InterfaceDAO<Classe> {
 
+    private static ClasseDAO instance;
+    protected EntityManager entityManager;
+
+    public static ClasseDAO getInstance() {
+        if (instance == null) {
+            instance = new ClasseDAO();
+        }
+        return instance;
+    }
+
+    private ClasseDAO() {
+        entityManager = getEntityManager();
+    }
+
+    private EntityManager getEntityManager() {
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("Mercado_PU");
+        if (entityManager == null) {
+            entityManager = factory.createEntityManager();
+        }
+        return entityManager;
+    }
+
     @Override
     public void create(Classe objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "INSERT INTO classe (descricao) VALUES (?)";
-        PreparedStatement pstm = null;
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, objeto.getDescricao());
-            pstm.executeUpdate();
+            entityManager.getTransaction().begin();
+            entityManager.persist(objeto);
+            entityManager.getTransaction().commit();
 
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+
         }
-        ConnectionFactory.closeConnection(conexao, pstm);
     }
 
     @Override
     public Classe retrieve(int codigo) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, descricao FROM classe WHERE id = ?";
 
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setInt(1, codigo);
-            rst = pstm.executeQuery();
-            Classe classe = new Classe();
-
-            while (rst.next()) {
-                classe.setId(codigo);
-                classe.setDescricao(rst.getString("descricao"));
-
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return classe;
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return null;
-        }
+        Classe classe;
+        classe = entityManager.find(Classe.class, codigo);
+        return classe;
     }
 
     @Override
@@ -87,72 +90,37 @@ public class ClasseDAO implements InterfaceDAO<Classe> {
 
     @Override
     public List<Classe> retrieve() {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, descricao FROM classe";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        List<Classe> listaClasse = new ArrayList<>();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                Classe classe = new Classe();
-                classe.setId(rst.getInt("id"));
-                classe.setDescricao(rst.getString("descricao"));
-                listaClasse.add(classe);
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return listaClasse;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return null;
-        }
+        List<Classe> classes;
+        classes = entityManager.createQuery("SELECT cc FROM classe cc", Classe.class).getResultList();
+        return classes;
     }
 
     @Override
     public void update(Classe objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "UPDATE classe SET descricao = ? WHERE id = ?";
-        PreparedStatement pstm = null;
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
+            entityManager.getTransaction().begin();
+            entityManager.merge(objeto);
+            entityManager.getTransaction().commit();
 
-            pstm.setString(1, objeto.getDescricao());
-
-            pstm.setInt(2, objeto.getId());
-            pstm.executeUpdate();
-
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+
         }
-        ConnectionFactory.closeConnection(conexao, pstm);
     }
 
     @Override
     public int delete(Classe objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "DELETE FROM classe WHERE id = ?";
-        PreparedStatement pstm = null;
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setInt(1, objeto.getId());
-            pstm.executeUpdate();
-            ConnectionFactory.closeConnection(conexao, pstm);
-            return 0;
-        } catch (SQLException ex) {
+            entityManager.getTransaction().begin();
+            entityManager.remove(objeto);
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
             ex.printStackTrace();
-            ConnectionFactory.closeConnection(conexao, pstm);
-            return -1;
-        }
-        
+            entityManager.getTransaction().rollback();
 
+        }
+        return -1;
     }
 
 }
