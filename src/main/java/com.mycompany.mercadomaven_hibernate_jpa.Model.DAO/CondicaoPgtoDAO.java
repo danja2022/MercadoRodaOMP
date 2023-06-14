@@ -15,7 +15,6 @@ import javax.persistence.Persistence;
 
 public class CondicaoPgtoDAO implements InterfaceDAO<CondicaoPgto> {
 
-    
     private static CondicaoPgtoDAO instance;
     protected EntityManager entityManager;
 
@@ -39,11 +38,9 @@ public class CondicaoPgtoDAO implements InterfaceDAO<CondicaoPgto> {
         return entityManager;
     }
 
-    
-    
     @Override
     public void create(CondicaoPgto objeto) {
-       try {
+        try {
             entityManager.getTransaction().begin();
             entityManager.persist(objeto);
             entityManager.getTransaction().commit();
@@ -65,40 +62,13 @@ public class CondicaoPgtoDAO implements InterfaceDAO<CondicaoPgto> {
 
     @Override
     public CondicaoPgto retrieve(String descricao) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, descricaoCondicao, numeroParcelas, diaPrimeiraParcela, diaEntreParcela, status  FROM condicaopagamento WHERE descricao = ?";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, descricao);
-            rst = pstm.executeQuery();
-            CondicaoPgto condicaoPgto = new CondicaoPgto();
-
-            while (rst.next()) {
-                condicaoPgto.setId(rst.getInt("id"));
-                condicaoPgto.setDescricaoCondicao(rst.getString("descricaoCondicao"));
-                condicaoPgto.setNumeroParcelas(rst.getInt("numeroParcelas"));
-                condicaoPgto.setDiasPrimeiraParcela(rst.getString("diaPrimeiraParcela"));
-                condicaoPgto.setDiaEntreParcela(rst.getInt("diaEntreParcela"));
-                condicaoPgto.setStatus(rst.getString("status").charAt(0));
-
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return condicaoPgto;
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return null;
-        }
+        CondicaoPgto condicaoPgto = entityManager.createQuery("SELECT cp FROM condicaopagamento cp where cp.descricao = :parDescricao", CondicaoPgto.class).setParameter("parDescricao", descricao).getSingleResult();
+        return condicaoPgto;
     }
 
     @Override
     public List<CondicaoPgto> retrieve() {
-       List<CondicaoPgto> condicaoPgtos;
+        List<CondicaoPgto> condicaoPgtos;
         condicaoPgtos = entityManager.createQuery("SELECT cp condicaopagamento cp", CondicaoPgto.class).getResultList();
         return condicaoPgtos;
 
@@ -120,18 +90,16 @@ public class CondicaoPgtoDAO implements InterfaceDAO<CondicaoPgto> {
 
     @Override
     public int delete(CondicaoPgto objeto) {
-         try {
+        try {
             entityManager.getTransaction().begin();
             entityManager.remove(objeto);
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
-           
-        }
-         return -1;
-        }
 
+        }
+        return -1;
     }
 
 }

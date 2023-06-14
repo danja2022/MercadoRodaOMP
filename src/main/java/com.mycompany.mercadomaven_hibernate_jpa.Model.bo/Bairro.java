@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
-@Entity
+@Entity (name="bairro")
 public class Bairro implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

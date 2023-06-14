@@ -66,43 +66,8 @@ public class EnderecoDAO implements InterfaceDAO<Endereco> {
 
     @Override
     public Endereco retrieve(String cep) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, logradouro, cep, bairro_id, cidade_id FROM endereco WHERE cep = ?;";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, cep);
-            rst = pstm.executeQuery();
-            Endereco endereco = new Endereco();
-            Bairro bairro = new Bairro();
-            BairroDAO bairroDAO = new BairroDAO();
-            Cidade cidade = new Cidade();
-            CidadeDAO cidadeDAO = new CidadeDAO();
-
-            while (rst.next()) {
-                endereco.setId(rst.getInt("id"));
-                endereco.setLogradouro(rst.getString("logradouro"));
-                endereco.setCep(rst.getString("cep"));
-                bairro = bairroDAO.retrieve(rst.getInt("bairro_id"));
-                cidade = cidadeDAO.retrieve(rst.getInt("cidade_id"));
-                endereco.setBairro(bairro);
-                endereco.setCidade(cidade);
-
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return endereco;
-
-        } catch (SQLException ex) {
-
-            ex.printStackTrace();
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return null;
-
-        }
-
+        Endereco endereco = entityManager.createQuery("SELECT e FROM endereco e where e.cep = :parCep", Endereco.class).setParameter("parCep",cep).getSingleResult();
+        return endereco;
     }
 
     @Override

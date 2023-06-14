@@ -67,55 +67,8 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
 
     @Override
     public Produto retrieve(String descricao) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, descricao, valorCompra, valorVenda,unidadeCompra, unidadeVenda, fatorConversao, status,dataCadastro, barraEntrada, barraSaida, estoqueMinimo, estoqueMaximo, classe_id, marca_id "
-                + " FROM produto"
-                + " WHERE descricao = ?";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, descricao);
-            rst = pstm.executeQuery();
-            Produto produto = new Produto();
-
-            while (rst.next()) {
-
-                produto.setId(rst.getInt("id"));
-                produto.setDescricao(rst.getString("descricao"));
-                produto.setValorCompra(rst.getFloat("valorCompra"));
-                produto.setValorVenda(rst.getFloat("valorVenda"));
-                produto.setUndCompra(rst.getString("unidadeCompra"));
-                produto.setUndVenda(rst.getString("unidadeVenda"));
-                produto.setFatorConversao(rst.getInt("fatorConversao"));
-                produto.setStatus(rst.getString("status").charAt(0));
-                produto.setDataCadastro(rst.getString("dataCadastro"));
-                produto.setBarraEntrada(rst.getString("barraEntrada"));
-                produto.setBarraSaida(rst.getString("barraSaida"));
-                produto.setEstoqueMinimo(rst.getFloat("estoqueMinimo"));
-                produto.setEstoqueMaximo(rst.getFloat("estoqueMaximo"));
-
-                Classe classe = new Classe();
-                ClasseDAO classeDAO = new ClasseDAO();
-                classe = classeDAO.retrieve(rst.getInt("classe_id"));
-                produto.setClasse(classe);
-
-                Marca marca = new Marca();
-                MarcaDAO marcaDAO = new MarcaDAO();
-                marca = marcaDAO.retrieve(rst.getInt("marca_id"));
-                produto.setMarca(marca);
-            }
-            ConnectionFactory.closeConnection(conexao, pstm);
-            return produto;
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ConnectionFactory.closeConnection(conexao, pstm);
-            return null;
-        }
-
+        Produto produto = entityManager.createQuery("SELECT p FROM produto p where p.descricao = :parDescricao", Produto.class).setParameter("parDescricao", descricao).getSingleResult();
+        return produto;
     }
 
     @Override
@@ -141,18 +94,18 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
 
     @Override
     public int delete(Produto objeto) {
-         try {
+        try {
             entityManager.getTransaction().begin();
             entityManager.remove(objeto);
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
-           
-        }
-         return -1;
-        }
 
+        }
+        return -1;
     }
 
 }
+
+

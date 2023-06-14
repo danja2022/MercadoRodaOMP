@@ -63,34 +63,8 @@ public class BairroDAO implements InterfaceDAO<Bairro> {
 
     @Override // select pela descrição e trás um bairro
     public Bairro retrieve(String descricao) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, descricao FROM bairro WHERE descricao =? ";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, descricao);
-            rst = pstm.executeQuery();
-            Bairro bairro = new Bairro();
-
-            while (rst.next()) {    //essa classe que aumenta quando tem que colocar mais atributos
-
-                bairro.setId(rst.getInt("id"));
-                bairro.setDescricao(rst.getString("descricao"));
-
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-
-            return bairro;
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return null;
-        }
+        Bairro bairro = entityManager.createQuery("SELECT b FROM bairro b where b.descricao = :parDescricao", Bairro.class).setParameter("parDescricao",descricao).getSingleResult();
+        return bairro;
     }
 
     @Override //select sem parametros
@@ -119,7 +93,7 @@ public class BairroDAO implements InterfaceDAO<Bairro> {
     public int delete(Bairro objeto) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.remove(objeto);
+            objeto = entityManager.find(Bairro.class, objeto.getId());
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();

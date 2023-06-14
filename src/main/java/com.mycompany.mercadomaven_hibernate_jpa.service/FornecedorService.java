@@ -8,38 +8,38 @@ import java.util.List;
 
 public class FornecedorService {
     public static void criar(Fornecedor objeto) {
-        FornecedorDAO fornecedorDAO = new FornecedorDAO();
-        fornecedorDAO.create(objeto);
+        FornecedorDAO.getInstance().create(objeto);
+        // FornecedorDAO fornecedorDAO = new FornecedorDAO();
+        //fornecedorDAO.create(objeto);
     }
 
     public static Fornecedor buscar(int codigo) {
-        FornecedorDAO fornecedorDAO = new FornecedorDAO();
-        
-        
-      return fornecedorDAO.retrieve(codigo);
+       return FornecedorDAO.getInstance().retrieve(codigo);
+       //FornecedorDAO fornecedorDAO = new FornecedorDAO();
+      //return fornecedorDAO.retrieve(codigo);
     }
 
     public static Fornecedor buscar(String descricao) {
-        FornecedorDAO fornecedorDAO = new FornecedorDAO();
-        return fornecedorDAO.retrieve(descricao);
+         return FornecedorDAO.getInstance().retrieve(descricao);
+        // FornecedorDAO fornecedorDAO = new FornecedorDAO();
+        //return fornecedorDAO.retrieve(descricao);
 
     }
 
     public static List<Fornecedor> buscar() {
-        FornecedorDAO fornecedorDAO = new FornecedorDAO();
-        return fornecedorDAO.retrieve();
+        return FornecedorDAO.getInstance().retrieve();
+        // FornecedorDAO fornecedorDAO = new FornecedorDAO();
+       // return fornecedorDAO.retrieve();
 
     }
 
     public static void atualizar(Fornecedor objeto) {
-
-        FornecedorDAO fornecedorDAO = new FornecedorDAO();
-        fornecedorDAO.update(objeto);
+        FornecedorDAO.getInstance().update(objeto);
+        //FornecedorDAO fornecedorDAO = new FornecedorDAO();
+        //fornecedorDAO.update(objeto);
     }
 
     public static int excluir(Fornecedor objeto) {
-         FornecedorDAO fornecedorDAO = new FornecedorDAO();
-           return fornecedorDAO.delete(objeto);
-        
+         return FornecedorDAO.getInstance().delete(objeto);
     }
 }

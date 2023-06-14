@@ -62,46 +62,9 @@ public class ColaboradorDAO implements InterfaceDAO<Colaborador> {
     }
 
     @Override
-    public Colaborador retrieve(String descricao) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, nome, fone1, fone2, complementoEndereco, email, dataCadastro, observacao, status, login, senha, endereco_id"
-                + " FROM colaborador"
-                + " WHERE login = ?";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, descricao);
-            rst = pstm.executeQuery();
-            Colaborador colaborador = new Colaborador();
-
-            while (rst.next()) {
-                colaborador.setId(rst.getInt("id"));
-                colaborador.setNome(rst.getString("nome"));
-                colaborador.setFone(rst.getString("fone1"));
-                colaborador.setFone2(rst.getString("fone2"));
-                colaborador.setComplementoEndereco(rst.getString("complementoEndereco"));
-                colaborador.setEmail(rst.getString("email"));
-                colaborador.setDtCadastro(rst.getString("dataCadastro"));
-                colaborador.setObservacao(rst.getString("observacao"));
-                colaborador.setStatus(rst.getString("status").charAt(0));
-                colaborador.setLogin(rst.getString("login"));
-                colaborador.setSenha(rst.getString("senha"));
-                Endereco endereco = new Endereco();
-                EnderecoDAO enderecoDAO = new EnderecoDAO();
-                endereco = enderecoDAO.retrieve(rst.getInt("endereco_id"));
-                colaborador.setEndereco(endereco);
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return colaborador;
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ConnectionFactory.closeConnection(conexao, pstm);
-            return null;
-        }
+    public Colaborador retrieve(String nome) {
+        Colaborador colaborador = entityManager.createQuery("SELECT col FROM colaborador col where col.nome = :parNome", Colaborador.class).setParameter("parNome",nome).getSingleResult();
+        return colaborador;
     }
 
     @Override

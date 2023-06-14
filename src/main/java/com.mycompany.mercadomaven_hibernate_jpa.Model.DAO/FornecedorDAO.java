@@ -62,51 +62,8 @@ public class FornecedorDAO implements InterfaceDAO<Fornecedor> {
 
     @Override
     public Fornecedor retrieve(String descricao) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id, nome, fone1, fone2, complementoEndereco, email, dataCadastro, observacao, status, cnpj, cpf, rg,inscEstadual, contato, razaoSocial, endereco_id "
-                + " FROM fornecedor"
-                + " WHERE descricao = ?";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-        //1-id, 2-nome, 3-fone1, 4-fone2, 5-complemento, 6-email, 7-dataCadastro, 8-observacao, 9-status, 10-cnpj, 11-cpf, 12-rg,13-inscEstadual, 14-contato, 15-razaoSocial, 16-endereco_id
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, descricao);
-            rst = pstm.executeQuery();
-            Fornecedor fornecedor = new Fornecedor();
-
-            while (rst.next()) {
-                fornecedor.setId(rst.getInt("id"));
-                fornecedor.setNome(rst.getString("nome"));
-                fornecedor.setFone(rst.getString("fone1"));
-                fornecedor.setFone2(rst.getString("fone2"));
-                fornecedor.setComplementoEndereco(rst.getString("complementoEndereco"));
-                fornecedor.setEmail(rst.getString("email"));
-                fornecedor.setDtCadastro(rst.getString("dataCadastro"));
-                fornecedor.setObservacao(rst.getString("observacao"));
-                fornecedor.setStatus(rst.getString("status").charAt(0));
-                fornecedor.setCpf(rst.getString("cpf"));
-                fornecedor.setRg(rst.getString("rg"));
-                fornecedor.setCnpj(rst.getString("cnpj"));
-                fornecedor.setInscEstadual(rst.getString("inscEstadual"));
-                fornecedor.setContato(rst.getString("contato"));
-                fornecedor.setRazaoSocial(rst.getString("razaoSocial"));
-                Endereco endereco = new Endereco();
-                EnderecoDAO enderecoDAO = new EnderecoDAO();
-                endereco = enderecoDAO.retrieve(rst.getInt("endereco_id"));
-                fornecedor.setEndereco(endereco);
-
-            }
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return fornecedor;
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            ConnectionFactory.closeConnection(conexao, pstm);
-            return null;
-        }
+        Fornecedor fornecedor = entityManager.createQuery("SELECT f FROM fornecedor f where f.descricao = :parDescricao", Fornecedor.class).setParameter("parDescricao",descricao).getSingleResult();
+        return fornecedor;
     }
 
     @Override
