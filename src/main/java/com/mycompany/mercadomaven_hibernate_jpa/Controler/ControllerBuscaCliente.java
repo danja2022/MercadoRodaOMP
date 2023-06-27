@@ -29,7 +29,7 @@ public class ControllerBuscaCliente implements ActionListener {
             //carregar
             
             DefaultTableModel tabela = (DefaultTableModel) this.foBuscaCliente.getjTablebusca().getModel();
-            ClienteDAO clienteDAO = new ClienteDAO();
+           
             for (Cliente clienteAtualDaLista: ClienteService.buscar()){
             
                 tabela.addRow(new Object[]{clienteAtualDaLista.getId(),

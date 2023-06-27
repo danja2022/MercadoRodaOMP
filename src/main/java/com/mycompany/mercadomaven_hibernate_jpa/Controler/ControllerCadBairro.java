@@ -112,10 +112,10 @@ public class ControllerCadBairro implements ActionListener {
         } else if (acao.getSource() == telaCadBairro.getBtDeletar()) {
             if (!telaCadBairro.getjTextFieldId().getText().trim().equalsIgnoreCase("")) {
                 Bairro bairro = new Bairro();
-                BairroDAO bairroDAO = new BairroDAO();
-                bairro = bairroDAO.retrieve(Integer.parseInt(telaCadBairro.getjTextFieldId().getText()));
+               // BairroDAO bairroDAO = new BairroDAO();
+                bairro = BairroService.buscar(Integer.parseInt(telaCadBairro.getjTextFieldId().getText()));
 
-                if (bairroDAO.delete(bairro) == -1) {
+                if (BairroService.excluir(bairro) == -1) {
                     JOptionPane.showMessageDialog(null, "Erro ao deletar. Verifique se o bairro está cadastrado em algum endereço");
                 } else {
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadBairro.getjPanel4());

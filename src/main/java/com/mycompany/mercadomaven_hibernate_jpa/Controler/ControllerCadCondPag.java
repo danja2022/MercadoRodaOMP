@@ -181,7 +181,7 @@ public class ControllerCadCondPag implements ActionListener {
                     condicaoPgto.setStatus('I');
                 }
 
-                CondicaoPgtoDAO condicaoPgtoDAO = new CondicaoPgtoDAO();
+           
                 if (telaCadCondicaoPagamento.getjTfIdConPag().getText().trim().equalsIgnoreCase("")) {
                     CondPagService.criar(condicaoPgto);
                 } else {

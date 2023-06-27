@@ -22,7 +22,7 @@ public class ControllerBuscaCondPag implements ActionListener {
         foBuscaCondicaoPagamento.getjButtonSair().addActionListener(this);
 
         DefaultTableModel tabela = (DefaultTableModel) this.foBuscaCondicaoPagamento.getjTablebusca().getModel();
-        CondicaoPgtoDAO condicaoPgtoDAO = new CondicaoPgtoDAO();
+        
         for (CondicaoPgto CondicaoPgtoAtualDaLista : CondPagService.buscar()) {
 
             tabela.addRow(new Object[]{CondicaoPgtoAtualDaLista.getId(), 

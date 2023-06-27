@@ -165,8 +165,8 @@ public class ControllerCadColaborador implements ActionListener {
                 colaborador.setComplementoEndereco(telacadColaborador.getTfComplemento().getText());
 
                 Endereco endereco = new Endereco();
-                EnderecoDAO enderecoDAO = new EnderecoDAO();
-                endereco = enderecoDAO.retrieve(telacadColaborador.getjCbCep().getSelectedItem().toString());
+             
+                endereco = EnderecoService.buscar(telacadColaborador.getjCbCep().getSelectedItem().toString());
                 colaborador.setEndereco(endereco);
 
                 if (telacadColaborador.gettFId().getText().trim().equalsIgnoreCase("")) {

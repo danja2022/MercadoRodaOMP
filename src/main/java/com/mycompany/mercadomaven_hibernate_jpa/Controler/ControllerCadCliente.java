@@ -1,6 +1,5 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Controler;
 
-
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.ClienteDAO;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.EnderecoDAO;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Cliente;
@@ -16,6 +15,11 @@ import com.mycompany.mercadomaven_hibernate_jpa.view.FoBuscaCliente;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroCliente;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroEndereco;
 import com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControllerCadCliente implements ActionListener {
 
@@ -41,7 +45,7 @@ public class ControllerCadCliente implements ActionListener {
 
     public void atualizaCampos(int codigo) {
         Cliente cliente = new Cliente();
-     
+
         cliente = ClienteService.buscar(codigo);
 
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telaCadCliente.getjPanel4());
@@ -54,8 +58,9 @@ public class ControllerCadCliente implements ActionListener {
         } else {
             telaCadCliente.getjRadioBtInativo().setSelected(true);
         }
-
-        telaCadCliente.getFtfDtNasc().setText(dateToString(cliente.getDtNascimento()));
+        DateFormat data = new SimpleDateFormat("dd-mm-yyyy");
+        
+        telaCadCliente.getFtfDtNasc().setText(data.format(cliente.getDtNascimento()));
         telaCadCliente.getFtfCPF().setText(cliente.getCpf());
         telaCadCliente.getTfRG().setText(cliente.getRg());
 
@@ -150,8 +155,6 @@ public class ControllerCadCliente implements ActionListener {
     public void setComboBox() {
         List<Endereco> listaEndereco = new ArrayList<>();
 
-        
-
         listaEndereco = EnderecoService.buscar();
 
         telaCadCliente.getjComboBoxCep().removeAllItems();
@@ -188,10 +191,15 @@ public class ControllerCadCliente implements ActionListener {
             } else if (telaCadCliente.getTfEmail().getText().trim().equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "O campo Email é obrigatório!");
             } else {
-
+                DateFormat data = new SimpleDateFormat("dd-mm-yyyy");
+                
                 Cliente cliente = new Cliente();
                 cliente.setNome(telaCadCliente.getTfNome().getText());
-                cliente.setDtNascimento(stringToDate(telaCadCliente.getFtfDtNasc().getText()));
+                try {
+                    cliente.setDtNascimento(data.parse(telaCadCliente.getFtfDtNasc().getText()));
+                } catch (ParseException ex) {
+                    Logger.getLogger(ControllerCadCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 cliente.setCpf(telaCadCliente.getFtfCPF().getText());
                 cliente.setFone(telaCadCliente.getFtfTelefone1().getText());
                 if (verificaNumero(telaCadCliente.getFtfTelefone2().getText())) {
@@ -226,12 +234,10 @@ public class ControllerCadCliente implements ActionListener {
                     cliente.setComplementoEndereco("");
                 }
                 Endereco endereco = new Endereco();
-                
+
                 endereco = EnderecoService.buscar(telaCadCliente.getjComboBoxCep().getSelectedItem().toString());
                 cliente.setEndereco(endereco);
                 cliente.setObservacao(telaCadCliente.getjTextArea1().getText().trim());
-
-                
 
                 if (telaCadCliente.getjTfId().getText().trim().equalsIgnoreCase("")) {
                     ClienteService.criar(cliente);
@@ -257,7 +263,7 @@ public class ControllerCadCliente implements ActionListener {
         } else if (acao.getSource() == telaCadCliente.getjComboBoxCep()) {
             if (telaCadCliente.getjComboBoxCep().getSelectedItem() != null) {
                 Endereco endereco = new Endereco();
-               
+
                 endereco = EnderecoService.buscar(telaCadCliente.getjComboBoxCep().getSelectedItem().toString());
                 telaCadCliente.getTfBairro().setText(endereco.getBairro().getDescricao());
                 telaCadCliente.getTfCidade().setText(endereco.getCidade().getDescricao());
@@ -271,7 +277,7 @@ public class ControllerCadCliente implements ActionListener {
         } else if (acao.getSource() == telaCadCliente.getBtDeletar()) {
             if (!telaCadCliente.getjTfId().getText().trim().equalsIgnoreCase("")) {
                 Cliente cliente = new Cliente();
-                
+
                 cliente = ClienteService.buscar(Integer.parseInt(telaCadCliente.getjTfId().getText()));
 
                 if (ClienteService.excluir(cliente) == -1) {

@@ -6,11 +6,11 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-06-13T22:20:11")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-06-26T20:41:35")
 @StaticMetamodel(CupomFiscal.class)
 public class CupomFiscal_ { 
 
-    public static volatile SingularAttribute<CupomFiscal, String> horaVenda;
+    public static volatile SingularAttribute<CupomFiscal, Date> horaVenda;
     public static volatile SingularAttribute<CupomFiscal, Float> totalCupom;
     public static volatile SingularAttribute<CupomFiscal, Date> dataVenda;
     public static volatile SingularAttribute<CupomFiscal, Float> valorDesconto;

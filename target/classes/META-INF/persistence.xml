@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="Mercado_PU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Bairro</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Cidade</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Classe</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Cliente</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Colaborador</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Compra</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.CondicaoPgto</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.CupomFiscal</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Fornecedor</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.HistoricoMovimentacao</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.ItensCompra</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.ItensCupomFiscal</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Marca</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Pagamento</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Pagar</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Produto</class>
-    <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Endereco</class>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/retaguarda"/> //
-      <property name="javax.persistence.jdbc.user" value="root"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="$@lame123"/>
-    </properties>
-  </persistence-unit>
+      <persistence-unit name="Mercado_PU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Bairro</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Cidade</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Classe</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Cliente</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Colaborador</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Compra</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.CondicaoPgto</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.CupomFiscal</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Fornecedor</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.HistoricoMovimentacao</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.ItensCompra</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.ItensCupomFiscal</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Marca</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Pagamento</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Pagar</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Produto</class>
+        <class>com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Endereco</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/retaguarda?verifyServerCertificate=false&amp;useSSL=false&amp;requireSSL=false&amp;serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.password" value="$@lame123"/>
+        </properties>
+    </persistence-unit>
 </persistence>

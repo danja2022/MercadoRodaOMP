@@ -22,6 +22,8 @@ import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroClasse;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroMarca;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroProduto;
 import com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class ControllerCadastroProduto implements ActionListener {
 
@@ -107,9 +109,10 @@ public class ControllerCadastroProduto implements ActionListener {
         } else {
             telaCadProduto.getjRadioBtInativo().setSelected(true);
         }
+        DateFormat data = new SimpleDateFormat("dd-mm-yyyy");
         telaCadProduto.getjTextFieldBarraEntrada().setText(produto.getBarraEntrada());
         telaCadProduto.getjTextFieldBarraSaida().setText(produto.getBarraSaida());
-        telaCadProduto.getjFTextFieldDtCadastro().setText(dateToString(produto.getDataCadastro()));
+        telaCadProduto.getjFTextFieldDtCadastro().setText(data.format(produto.getDataCadastro()));
         telaCadProduto.getjTextFieldFatorConversao().setText(produto.getFatorConversao() + "");
         telaCadProduto.getjTextFieldNomeDescProd().setText(produto.getDescricao());
         telaCadProduto.getjTextFieldUnidadeCompra().setText(produto.getUndCompra());

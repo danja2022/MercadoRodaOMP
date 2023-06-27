@@ -106,11 +106,10 @@ public class ControllerCadEndereco implements ActionListener {
     public void setComboBox() {
         List<Cidade> listaCidade = new ArrayList<>();
         List<Bairro> listaBairro = new ArrayList<>();
-        BairroDAO bairroDAO = new BairroDAO();
-        CidadeDAO cidadeDAO = new CidadeDAO();
+        
 
-        listaCidade = cidadeDAO.retrieve();
-        listaBairro = bairroDAO.retrieve();
+        listaCidade = CidadeService.buscar();
+        listaBairro = BairroService.buscar();
 
         telaCadEndereco.getjComboBoxCidade().removeAllItems();
         telaCadEndereco.getjComboBoxBairro().removeAllItems();

@@ -104,7 +104,7 @@ public class ControllerCadMarca implements ActionListener {
         } else if (acao.getSource() == telaCadMarca.getBtDeletar()) {
             if (!telaCadMarca.getjTextFieldIdMarca().getText().trim().equalsIgnoreCase("")) {
                 Marca marca = new Marca();
-                MarcaDAO marcaDAO = new MarcaDAO();
+                
                 marca = MarcaService.buscar(Integer.parseInt(telaCadMarca.getjTextFieldIdMarca().getText()));
 
                 if (MarcaService.excluir(marca) == -1) {

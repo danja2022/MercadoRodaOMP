@@ -26,7 +26,7 @@ public class ControllerBuscaFornecedor implements ActionListener {
             //carregar
             
             DefaultTableModel tabela = (DefaultTableModel) this.foBuscaFornecedor.getjTablebusca().getModel();
-            FornecedorDAO fornecedorDAO = new FornecedorDAO ();
+           // FornecedorDAO fornecedorDAO = new FornecedorDAO ();
             for (Fornecedor fornecedorAtualdaLista: FornecedorService.buscar()){
             
                 tabela.addRow((new Object[]{fornecedorAtualdaLista.getId(),fornecedorAtualdaLista.getNome(),fornecedorAtualdaLista.getFone(),
