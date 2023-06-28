@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +71,7 @@ public class ColaboradorDAO implements InterfaceDAO<Colaborador> {
     @Override
     public List<Colaborador> retrieve() {
         List<Colaborador> colaboradores;
-        colaboradores = entityManager.createQuery("SELECT id, nome, fone1, fone2, complementoEndereco, email, dataCadastro, observacao, status,login, senha, endereco_id FROM colaborador", Colaborador.class).getResultList();
+        colaboradores = entityManager.createQuery("SELECT c FROM colaborador c", Colaborador.class).getResultList();
         return colaboradores;
     }
 

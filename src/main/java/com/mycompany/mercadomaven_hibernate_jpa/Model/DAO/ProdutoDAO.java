@@ -74,7 +74,7 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
     @Override
     public List<Produto> retrieve() {
         List<Produto> produtos;
-        produtos = entityManager.createQuery("SELECT id, descricao, valorCompra, valorVenda,unidadeCompra, unidadeVenda,fatorConversao, status,dataCadastro, barraEntrada, barraSaida, estoqueMinimo, estoqueMaximo, classe_id, marca_id FROM produto", Produto.class).getResultList();
+        produtos = entityManager.createQuery("SELECT p FROM produto p", Produto.class).getResultList();
         return produtos;
     }
 

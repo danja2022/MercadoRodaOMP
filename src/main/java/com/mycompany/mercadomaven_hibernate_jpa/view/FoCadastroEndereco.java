@@ -110,11 +110,11 @@ public class FoCadastroEndereco extends javax.swing.JFrame {
         this.jComboBoxCidade = jComboBoxCidade;
     }
 
-    public JTextField getjTfCep() {
+    public JFormattedTextField getjTfCep() {
         return jTfCep;
     }
 
-    public void setjTfCep(JTextField jTfCep) {
+    public void setjTfCep(JFormattedTextField jTfCep) {
         this.jTfCep = jTfCep;
     }
 
@@ -159,9 +159,9 @@ public class FoCadastroEndereco extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jComboBoxBairro = new javax.swing.JComboBox<>();
         jComboBoxCidade = new javax.swing.JComboBox<>();
-        jTfCep = new javax.swing.JTextField();
         jBtCadBairro = new javax.swing.JButton();
         jBtCadCidade = new javax.swing.JButton();
+        jTfCep = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         btNovo = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
@@ -212,6 +212,12 @@ public class FoCadastroEndereco extends javax.swing.JFrame {
             }
         });
 
+        try {
+            jTfCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout pnCentroLayout = new javax.swing.GroupLayout(pnCentro);
         pnCentro.setLayout(pnCentroLayout);
         pnCentroLayout.setHorizontalGroup(
@@ -245,7 +251,7 @@ public class FoCadastroEndereco extends javax.swing.JFrame {
                         .addGroup(pnCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jBtCadCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                             .addComponent(jBtCadBairro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addContainerGap(233, Short.MAX_VALUE))
         );
         pnCentroLayout.setVerticalGroup(
             pnCentroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,7 +473,7 @@ public class FoCadastroEndereco extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextFieldCadIdEndereco;
     private javax.swing.JTextField jTextFieldDescricaoLogradouro;
-    private javax.swing.JTextField jTfCep;
+    private javax.swing.JFormattedTextField jTfCep;
     private javax.swing.JPanel pnCentro;
     // End of variables declaration//GEN-END:variables
 }

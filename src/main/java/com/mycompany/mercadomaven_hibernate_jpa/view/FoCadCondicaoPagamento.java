@@ -30,12 +30,7 @@ public class FoCadCondicaoPagamento extends javax.swing.JFrame {
      */
     public FoCadCondicaoPagamento() throws ParseException {
 
-        initComponents();
-        
-        MaskFormatter maskData = new MaskFormatter("##-##-####");
-        
-        maskData.install(jFTfDiaPrimeiraParcela);
-        
+        initComponents();     
     }
 
  
@@ -216,7 +211,7 @@ public class FoCadCondicaoPagamento extends javax.swing.JFrame {
             }
         });
 
-        jLabelDiasPrimerParcelaCadConPag.setText("Dia 1ª Parcela: ");
+        jLabelDiasPrimerParcelaCadConPag.setText("Dias até 1ª Parcela: ");
 
         jLabel4.setText("Dia entre Parcela: ");
 

@@ -37,11 +37,11 @@ public final class FoCadastroColaborador extends javax.swing.JFrame {
         
         MaskFormatter maskTelefone1 = new MaskFormatter("(##) #####-####");
         MaskFormatter maskTelefone2 = new MaskFormatter("(##) #####-####");
-        MaskFormatter maskData = new MaskFormatter("##/##/####");
+       // MaskFormatter maskData = new MaskFormatter("##/##/####");
 
         maskTelefone1.install(ftfTelefone1);
         maskTelefone2.install(ftfTelefone2);
-        maskData.install(FtDataCadastro);
+        //maskData.install(FtDataCadastro);
 
     }
 
@@ -336,10 +336,11 @@ public final class FoCadastroColaborador extends javax.swing.JFrame {
         jLabelTelefone1CadColaborador.setText("Telefone 1* :");
 
         try {
-            ftfTelefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(0##)####-####")));
+            ftfTelefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        ftfTelefone1.setToolTipText("");
 
         jLabelTel2CadColaborador.setText("Telefone 2 :");
 
@@ -381,7 +382,7 @@ public final class FoCadastroColaborador extends javax.swing.JFrame {
 
         jCbCep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        BtCadCep.setText("+");
+        BtCadCep.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mercadomaven_hibernate_jpa/imagens/Find.png"))); // NOI18N
 
         javax.swing.GroupLayout pnEnderecoLayout = new javax.swing.GroupLayout(pnEndereco);
         pnEndereco.setLayout(pnEnderecoLayout);
@@ -389,15 +390,18 @@ public final class FoCadastroColaborador extends javax.swing.JFrame {
             pnEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnEnderecoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnEnderecoLayout.createSequentialGroup()
                         .addComponent(jCbCep, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtCadCep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCEPCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addComponent(BtCadCep, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(pnEnderecoLayout.createSequentialGroup()
+                        .addGroup(pnEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCEPCadColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, Short.MAX_VALUE)))
                 .addGroup(pnEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnEnderecoLayout.createSequentialGroup()
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)

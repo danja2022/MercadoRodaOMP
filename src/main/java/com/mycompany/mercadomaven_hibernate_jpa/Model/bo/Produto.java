@@ -25,9 +25,9 @@ public class Produto implements Serializable {
     @Column
     private float valorVenda;
     @Column
-    private String undVenda;
+    private String unidadeVenda;
     @Column
-    private String undCompra;
+    private String unidadeCompra;
     @Column
     private int fatorConversao;
     @Column
@@ -52,17 +52,15 @@ public class Produto implements Serializable {
     @ManyToOne
     private Marca marca;
 
-    @JoinColumn
-    @ManyToOne
-    private HistoricoMovimentacao historicoMovimentacao;
+   
 
-    public Produto(int id, String descricao, float valorCompra, float valorVenda, String undVenda, String undCompra, int fatorConversao, char status, Date dataCadastro, String barraEntrada, String barraSaida, float estoqueMinimo, float estoqueMaximo) {
+    public Produto(int id, String descricao, float valorCompra, float valorVenda, String unidadeVenda, String unidadeCompra, int fatorConversao, char status, Date dataCadastro, String barraEntrada, String barraSaida, float estoqueMinimo, float estoqueMaximo) {
         this.id = id;
         this.descricao = descricao;
         this.valorCompra = valorCompra;
         this.valorVenda = valorVenda;
-        this.undVenda = undVenda;
-        this.undVenda = undCompra;
+        this.unidadeVenda = unidadeVenda;
+        this.unidadeCompra = unidadeCompra;
         this.fatorConversao = fatorConversao;
         this.status = status;
         this.dataCadastro = dataCadastro;
@@ -77,11 +75,11 @@ public class Produto implements Serializable {
     }
 
     public String getUndCompra() {
-        return undCompra;
+        return unidadeCompra;
     }
 
     public void setUndCompra(String undCompra) {
-        this.undCompra = undCompra;
+        this.unidadeVenda = undCompra;
     }
 
     public int getId() {
@@ -117,11 +115,11 @@ public class Produto implements Serializable {
     }
 
     public String getUndVenda() {
-        return undVenda;
+        return unidadeVenda;
     }
 
     public void setUndVenda(String undVenda) {
-        this.undVenda = undVenda;
+        this.unidadeVenda = undVenda;
     }
 
     public int getFatorConversao() {
@@ -198,7 +196,7 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", valorCompra=" + valorCompra + ", valorVenda=" + valorVenda + ", undVenda=" + undVenda + ", fatorConversao=" + fatorConversao + ", status=" + status + ", dataCadastro=" + dataCadastro + ", barraEntrada=" + barraEntrada + ", barraSaida=" + barraSaida + ", estoqueMinimo=" + estoqueMinimo + ", estoqueMaximo=" + estoqueMaximo + '}';
+        return "Produto{" + "id=" + id + ", descricao=" + descricao + ", valorCompra=" + valorCompra + ", valorVenda=" + valorVenda + ", undVenda=" + unidadeVenda + ", fatorConversao=" + fatorConversao + ", status=" + status + ", dataCadastro=" + dataCadastro + ", barraEntrada=" + barraEntrada + ", barraSaida=" + barraSaida + ", estoqueMinimo=" + estoqueMinimo + ", estoqueMaximo=" + estoqueMaximo + '}';
     }
 
 }

@@ -22,14 +22,14 @@ public abstract class Pessoa implements Serializable {
     @Column
     private String nome;
     @Column
-    private String fone;
+    private String fone1;
     @Column
     private String fone2;
     @Column
     private String email;
     @Column
     @Temporal(TemporalType.DATE)
-    private Date dtCadastro;
+    private Date dataCadastro;
     @Column
     private String complementoEndereco;
     @Column
@@ -48,10 +48,10 @@ public abstract class Pessoa implements Serializable {
     public Pessoa(String nome, int id, String fone, String fone2, String email, Date dtCadastro, String complementoEndereco, String observacao, char status, Endereco endereco) {
         this.nome = nome;
         this.id = id;
-        this.fone = fone;
+        this.fone1 = fone;
         this.fone2 = fone2;
         this.email = email;
-        this.dtCadastro = dtCadastro;
+        this.dataCadastro = dtCadastro;
         this.complementoEndereco = complementoEndereco;
         this.observacao = observacao;
         this.status = status;
@@ -75,11 +75,11 @@ public abstract class Pessoa implements Serializable {
     }
 
     public String getFone() {
-        return fone;
+        return fone1;
     }
 
     public void setFone(String fone) {
-        this.fone = fone;
+        this.fone1 = fone;
     }
 
     public String getFone2() {
@@ -99,11 +99,11 @@ public abstract class Pessoa implements Serializable {
     }
 
     public Date getDtCadastro() {
-        return dtCadastro;
+        return dataCadastro;
     }
 
     public void setDtCadastro(Date dtCadastro) {
-        this.dtCadastro = dtCadastro;
+        this.dataCadastro = dtCadastro;
     }
 
     public String getComplementoEndereco() {

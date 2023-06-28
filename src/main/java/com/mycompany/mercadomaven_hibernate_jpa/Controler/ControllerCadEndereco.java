@@ -77,10 +77,10 @@ public class ControllerCadEndereco implements ActionListener {
         telaCadEndereco.getjBtCadBairro().addActionListener(this);
         telaCadEndereco.getjBtCadCidade().addActionListener(this);
         telaCadEndereco.getBtDeletar().addActionListener(this);
-
+        setComboBox();
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadEndereco.getjPanel4());
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadEndereco.getPnCentro());
-        setComboBox();
+      
 
     }
 

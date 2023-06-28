@@ -11,6 +11,12 @@ import javax.swing.JOptionPane;
 import com.mycompany.mercadomaven_hibernate_jpa.service.CondPagService;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoBuscaCondicaoPagamento;
 import com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControllerCadCondPag implements ActionListener {
 
@@ -163,16 +169,15 @@ public class ControllerCadCondPag implements ActionListener {
                 JOptionPane.showMessageDialog(null, "O campo 'Número de Parcelas' é obrigatório!");
             } else if (Integer.parseInt(telaCadCondicaoPagamento.getjTfNumParcelas().getText()) < 1) {
                 JOptionPane.showMessageDialog(null, "O campo 'Número de Parcelas' é deve ser maior que 0!");
-            } else if (!verificaData(telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().getText().trim())) {
+            } else if (telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().getText().trim().equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "O campo 'Primeira Parcela' é obrigatório!");
-            } else if (!verificaPrimeiraParcela(telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().getText().trim())) {
-                telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().setText("");
             } else {
                 CondicaoPgto condicaoPgto = new CondicaoPgto();
 
                 condicaoPgto.setDescricaoCondicao(telaCadCondicaoPagamento.getjTfDescricao().getText());
                 condicaoPgto.setDiaEntreParcela(Integer.parseInt(telaCadCondicaoPagamento.getjTfDiaEntreParcela().getText()));
-                condicaoPgto.setDiasPrimeiraParcela(stringToDate(telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().getText().trim()));
+                
+               // condicaoPgto.setDiasPrimeiraParcela(stringToDate(telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().getText().trim()));
                 condicaoPgto.setNumeroParcelas(Integer.parseInt(telaCadCondicaoPagamento.getjTfNumParcelas().getText()));
 
                 if (telaCadCondicaoPagamento.getjRadioBtAtivo().isSelected()) {

@@ -99,6 +99,7 @@ com\mycompany\mercadomaven_hibernate_jpa\view\FoCadBairroFinal$2.class
 com\mycompany\mercadomaven_hibernate_jpa\view\FoBuscaClasses.class
 com\mycompany\mercadomaven_hibernate_jpa\view\FoCadastroProduto$6.class
 com\mycompany\mercadomaven_hibernate_jpa\Controler\ControllerCadMarca.class
+com\mycompany\mercadomaven_hibernate_jpa\view\FoBuscaClasses$3.class
 com\mycompany\mercadomaven_hibernate_jpa\Model\bo\Endereco_.class
 com\mycompany\mercadomaven_hibernate_jpa\view\FoCadastroFornecedor$5.class
 com\mycompany\mercadomaven_hibernate_jpa\view\FoCadBairroFinal$3.class

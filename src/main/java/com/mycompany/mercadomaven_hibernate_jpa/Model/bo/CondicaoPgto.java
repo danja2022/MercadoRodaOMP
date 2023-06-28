@@ -19,22 +19,20 @@ public class CondicaoPgto implements Serializable{
     @Column
     private int numeroParcelas;
     @Column
-    private String diasPrimeiraParcela;
+    private String diaPrimeiraParcela;
     @Column
     private int diaEntreParcela;
     @Column
     private char status;
     
-    private Compra compra;
-    
     public CondicaoPgto() {
     }
 
-    public CondicaoPgto(int id, String descricaoCondicao, int numeroParcelas, String diasPrimeiraParcela, int diaEntreParcela, char status) {
+    public CondicaoPgto(int id, String descricaoCondicao, int numeroParcelas, String diaPrimeiraParcela, int diaEntreParcela, char status) {
         this.id = id;
         this.descricaoCondicao = descricaoCondicao;
         this.numeroParcelas = numeroParcelas;
-        this.diasPrimeiraParcela = diasPrimeiraParcela;
+        this.diaPrimeiraParcela = diaPrimeiraParcela;
         this.diaEntreParcela = diaEntreParcela;
         this.status = status;
     }
@@ -65,11 +63,11 @@ public class CondicaoPgto implements Serializable{
     }
 
     public String getDiasPrimeiraParcela() {
-        return diasPrimeiraParcela;
+        return diaPrimeiraParcela;
     }
 
     public void setDiasPrimeiraParcela(String diasPrimeiraParcela) {
-        this.diasPrimeiraParcela = diasPrimeiraParcela;
+        this.diaPrimeiraParcela = diasPrimeiraParcela;
     }
 
     public int getDiaEntreParcela() {
@@ -90,7 +88,7 @@ public class CondicaoPgto implements Serializable{
 
     @Override
     public String toString() {
-        return "CondicaoPgto{" + "id=" + id + ", descricaoCondicao=" + descricaoCondicao + ", numeroParcelas=" + numeroParcelas + ", diasPrimeiraParcela=" + diasPrimeiraParcela + ", diaEntreParcela=" + diaEntreParcela + ", status=" + status + '}';
+        return "CondicaoPgto{" + "id=" + id + ", descricaoCondicao=" + descricaoCondicao + ", numeroParcelas=" + numeroParcelas + ", diasPrimeiraParcela=" + diaPrimeiraParcela + ", diaEntreParcela=" + diaEntreParcela + ", status=" + status + '}';
     }
     
     

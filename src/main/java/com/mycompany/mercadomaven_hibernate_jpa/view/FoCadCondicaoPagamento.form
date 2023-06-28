@@ -182,7 +182,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDiasPrimerParcelaCadConPag">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Dia 1&#xaa; Parcela: "/>
+            <Property name="text" type="java.lang.String" value="Dias at&#xe9; 1&#xaa; Parcela: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">

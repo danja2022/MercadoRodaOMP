@@ -17,14 +17,14 @@ public class Colaborador extends Pessoa {
     
     
     
-    private CupomFiscal cupomFiscal;
+   
     
     public Colaborador() {
        
     }
 
-    public Colaborador(String login, String senha, String nome, int id, String fone, String fone2, String email, Date dtCadastro, String complementoEndereco, String observacao, char status, Endereco endereco) {
-        super(nome, id, fone, fone2, email, dtCadastro, complementoEndereco, observacao, status, endereco);
+    public Colaborador(String login, String senha, String nome, int id, String fone, String fone2, String email, Date dataCadastro, String complementoEndereco, String observacao, char status, Endereco endereco) {
+        super(nome, id, fone, fone2, email, dataCadastro, complementoEndereco, observacao, status, endereco);
         this.login = login;
         this.senha = senha;
     }

@@ -19,6 +19,13 @@ import com.mycompany.mercadomaven_hibernate_jpa.view.FoBuscaColaborador;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroColaborador;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroEndereco;
 import com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils;
+import com.mycompany.mercadomaven_hibernate_jpa.view.FoBuscaEndereco;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControllerCadColaborador implements ActionListener {
 
@@ -35,11 +42,17 @@ public class ControllerCadColaborador implements ActionListener {
         telacadColaborador.getBtCadCep().addActionListener(this);
         telacadColaborador.getjCbCep().addActionListener(this);
         telacadColaborador.getBtDeletar().addActionListener(this);
-
+        this.setComboBox();
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telacadColaborador.getjPanel4());
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnCentro());
-        this.setComboBox();
+        com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnEndereco());
 
+    }
+    
+    public void atualizaEndereco(int codigo){
+        Endereco endereco = new Endereco();
+        endereco = EnderecoService.buscar(codigo);
+        telacadColaborador.getjCbCep().setSelectedItem(endereco.getCep());
     }
 
     public void atualizaCampos(int codigo) {
@@ -49,9 +62,10 @@ public class ControllerCadColaborador implements ActionListener {
         Endereco endereco = new Endereco();
         
         endereco = EnderecoService.buscar(colaborador.getEndereco().getId());
-
+        //Rodrigo Ultils
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telacadColaborador.getjPanel4());
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telacadColaborador.getPnCentro());
+        com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telacadColaborador.getPnEndereco());
 
         telacadColaborador.gettFId().setText(colaborador.getId() + "");
         if (colaborador.getStatus() == 'A') {
@@ -59,7 +73,9 @@ public class ControllerCadColaborador implements ActionListener {
         } else {
             telacadColaborador.getjRadioBtInativo().setSelected(true);
         }
-        //telacadColaborador.getFtDataCadastro().setText(dateToString(colaborador.getDtCadastro()));
+        // Do Banco ao Form Data Rodrigo
+        DateFormat sdata = new SimpleDateFormat("dd-MM-yyyy");
+        telacadColaborador.getFtDataCadastro().setText(sdata.format(colaborador.getDtCadastro()));
         telacadColaborador.getTfNome().setText(colaborador.getNome());
         telacadColaborador.getTfEmail().setText(colaborador.getEmail());
         telacadColaborador.getFtfTelefone1().setText(colaborador.getFone());
@@ -120,12 +136,13 @@ public class ControllerCadColaborador implements ActionListener {
         if (acao.getSource() == telacadColaborador.getBtNovo()) {
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telacadColaborador.getjPanel4());
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telacadColaborador.getPnCentro());
+            com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telacadColaborador.getPnEndereco());
             telacadColaborador.gettFId().setEnabled(false);
 
         } else if (acao.getSource() == telacadColaborador.getBtCancelar()) {
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telacadColaborador.getjPanel4());
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnCentro());
-
+            com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnEndereco());
         } else if (acao.getSource() == telacadColaborador.getBtSalvar()) {
 
             if (telacadColaborador.getTfNome().getText().trim().equalsIgnoreCase("")) {
@@ -168,6 +185,18 @@ public class ControllerCadColaborador implements ActionListener {
              
                 endereco = EnderecoService.buscar(telacadColaborador.getjCbCep().getSelectedItem().toString());
                 colaborador.setEndereco(endereco);
+                // Para salvar no banco corretamente Rodrigo
+                DateFormat sdata = new SimpleDateFormat("dd-MM-yyyy");
+                Date date = new Date();
+                String strData;
+                strData = sdata.format(date);
+                
+                try {
+                    colaborador.setDtCadastro(sdata.parse(strData));
+                } catch (ParseException ex) {
+                    Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
 
                 if (telacadColaborador.gettFId().getText().trim().equalsIgnoreCase("")) {
                     ColaboradorService.criar(colaborador);
@@ -178,8 +207,8 @@ public class ControllerCadColaborador implements ActionListener {
                 }
 
                com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telacadColaborador.getjPanel4());
-                com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnCentro());
-
+               com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnCentro());
+               com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnEndereco());
             } else {
                 JOptionPane.showMessageDialog(null, "As Senhas não conferem");
             }
@@ -203,9 +232,9 @@ public class ControllerCadColaborador implements ActionListener {
             }
 
         } else if (acao.getSource() == telacadColaborador.getBtCadCep()) {
-            FoCadastroEndereco telaCadEndereco = new FoCadastroEndereco();
-            ControllerCadEndereco cadEndereco = new ControllerCadEndereco(telaCadEndereco, this);
-            telaCadEndereco.setVisible(true);
+            FoBuscaEndereco telaBuscaEndereco = new FoBuscaEndereco();
+            ControllerBuscaEndereco cadEndereco = new ControllerBuscaEndereco(telaBuscaEndereco, this);
+            telaBuscaEndereco.setVisible(true);
         } else if (acao.getSource() == telacadColaborador.getBtDeletar()) {
             if (!telacadColaborador.gettFId().getText().trim().equalsIgnoreCase("")) {
                 Colaborador colaborador = new Colaborador();
@@ -215,9 +244,11 @@ public class ControllerCadColaborador implements ActionListener {
                 if (ColaboradorService.excluir(colaborador) == -1) {
                     JOptionPane.showMessageDialog(null, "Erro ao deletar.");
                 } else {
+                    setComboBox();
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telacadColaborador.getjPanel4());
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnCentro());
-                    setComboBox();
+                    com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnEndereco());
+                    
                 }
             }
         }
