@@ -1,4 +1,0 @@
-
-
-
-update colaborador set dataCadastro
