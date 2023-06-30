@@ -1,6 +1,5 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Controler;
 
-
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.EnderecoDAO;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.FornecedorDAO;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.bo.Endereco;
@@ -17,6 +16,12 @@ import com.mycompany.mercadomaven_hibernate_jpa.view.FoBuscaFornecedor;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroEndereco;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroFornecedor;
 import com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControllerCadFornecedor implements ActionListener {
 
@@ -33,20 +38,21 @@ public class ControllerCadFornecedor implements ActionListener {
         telaCadFornecedor.getjBtCadCep().addActionListener(this);
         telaCadFornecedor.getjCbCep().addActionListener(this);
         telaCadFornecedor.getBtDeletar().addActionListener(this);
-
+        this.setComboBox();
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadFornecedor.getjPanel4());
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadFornecedor.getPnCentro());
-        this.setComboBox();
+        com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadFornecedor.getPnEndereco());
 
     }
 
     public void atualizaCampos(int codigo) {
         Fornecedor fornecedor = new Fornecedor();
-        
-        fornecedor = FornecedorService.buscar(codigo);
 
+        fornecedor = FornecedorService.buscar(codigo);
+        this.setComboBox();
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telaCadFornecedor.getjPanel4());
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadFornecedor.getPnCentro());
+        com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadFornecedor.getPnEndereco());
 
         telaCadFornecedor.getjTextFieldIdCadFornecedor().setText(fornecedor.getId() + "");
         if (fornecedor.getStatus() == 'A') {
@@ -54,7 +60,8 @@ public class ControllerCadFornecedor implements ActionListener {
         } else {
             telaCadFornecedor.getRbInativo().setSelected(true);
         }
-//        telaCadFornecedor.getjFtDataCadastro().setText(dateToString(fornecedor.getDtCadastro()));
+        DateFormat sdata = new SimpleDateFormat("dd-MM-yyyy");
+        telaCadFornecedor.getjFtDataCadastro().setText(sdata.format(fornecedor.getDtCadastro()));
         telaCadFornecedor.getTfNome().setText(fornecedor.getNome());
         telaCadFornecedor.getTfRazaoSocial().setText(fornecedor.getRazaoSocial());
         telaCadFornecedor.getFtfCPF().setText(fornecedor.getCpf());
@@ -123,8 +130,6 @@ public class ControllerCadFornecedor implements ActionListener {
     public void setComboBox() {
         List<Endereco> listaEndereco = new ArrayList<>();
 
-        
-
         listaEndereco = EnderecoService.buscar();
 
         telaCadFornecedor.getjCbCep().removeAllItems();
@@ -139,6 +144,7 @@ public class ControllerCadFornecedor implements ActionListener {
         if (acao.getSource() == telaCadFornecedor.getBtNovo()) {
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telaCadFornecedor.getjPanel4());
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadFornecedor.getPnCentro());
+
             telaCadFornecedor.getjTextFieldIdCadFornecedor().setEnabled(false);
 
         } else if (acao.getSource() == telaCadFornecedor.getBtCancelar()) {
@@ -203,12 +209,29 @@ public class ControllerCadFornecedor implements ActionListener {
                 fornecedor.setObservacao(telaCadFornecedor.getjTextArea1().getText());
 
                 Endereco endereco = new Endereco();
-                
 
                 endereco = EnderecoService.buscar(telaCadFornecedor.getjCbCep().getSelectedItem().toString());
                 fornecedor.setEndereco(endereco);
+                DateFormat sdata = new SimpleDateFormat("dd-MM-yyyy");
+                if (telaCadFornecedor.getjFtDataCadastro().getText().trim().equalsIgnoreCase("")) {
 
-                
+                    Date date = new Date();
+                    String strData;
+                    strData = sdata.format(date);
+
+                    try {
+                        fornecedor.setDtCadastro(sdata.parse(strData));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } else {
+                    try {
+                        fornecedor.setDtCadastro(sdata.parse(telaCadFornecedor.getjFtDataCadastro().getText()));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
 
                 if (telaCadFornecedor.getjTextFieldIdCadFornecedor().getText().trim().equalsIgnoreCase("")) {
                     FornecedorService.criar(fornecedor);
@@ -216,8 +239,12 @@ public class ControllerCadFornecedor implements ActionListener {
                     fornecedor.setId(Integer.parseInt(telaCadFornecedor.getjTextFieldIdCadFornecedor().getText()));
                     FornecedorService.atualizar(fornecedor);
                 }
+                setComboBox();
+
                 com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadFornecedor.getjPanel4());
                 com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadFornecedor.getPnCentro());
+                com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadFornecedor.getPnEndereco());
+
             }
 
         } else if (acao.getSource() == telaCadFornecedor.getBtBuscar()) {
@@ -236,7 +263,7 @@ public class ControllerCadFornecedor implements ActionListener {
         } else if (acao.getSource() == telaCadFornecedor.getjCbCep()) {
             if (telaCadFornecedor.getjCbCep().getSelectedItem() != null) {
                 Endereco endereco = new Endereco();
-                
+
                 endereco = EnderecoService.buscar(telaCadFornecedor.getjCbCep().getSelectedItem().toString());
                 telaCadFornecedor.getTfBairro().setText(endereco.getBairro().getDescricao());
                 telaCadFornecedor.getTfCidade().setText(endereco.getCidade().getDescricao());
@@ -245,15 +272,17 @@ public class ControllerCadFornecedor implements ActionListener {
         } else if (acao.getSource() == telaCadFornecedor.getBtDeletar()) {
             if (!telaCadFornecedor.getjTextFieldIdCadFornecedor().getText().trim().equalsIgnoreCase("")) {
                 Fornecedor fornecedor = new Fornecedor();
-                
+
                 fornecedor = FornecedorService.buscar(Integer.parseInt(telaCadFornecedor.getjTextFieldIdCadFornecedor().getText()));
 
                 if (FornecedorService.excluir(fornecedor) == -1) {
                     JOptionPane.showMessageDialog(null, "Erro ao deletar. Verifique se existe um produto cadastrado com esse fornecedor");
                 } else {
+                    setComboBox();
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadFornecedor.getjPanel4());
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadFornecedor.getPnCentro());
-                    setComboBox();
+                    com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadFornecedor.getPnEndereco());
+
                 }
 
             }

@@ -86,16 +86,18 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="ftfDtNasc" alignment="0" min="-2" pref="204" max="-2" attributes="0"/>
-                                      <Component id="jLabelDtNascCadCliente" alignment="0" min="-2" pref="159" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                  <Component id="jLabelDtNascCadCliente" min="-2" pref="159" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="rbFeminino" min="-2" pref="98" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="rbNaoInformar" min="-2" pref="125" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="rbFeminino" min="-2" pref="98" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="rbNaoInformar" min="-2" pref="125" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="ftfDtNasc" min="-2" pref="204" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -169,7 +171,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="tfNome" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ftfDtNasc" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ftfDtNasc" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">

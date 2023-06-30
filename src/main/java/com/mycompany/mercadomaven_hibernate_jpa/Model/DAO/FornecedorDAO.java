@@ -69,7 +69,7 @@ public class FornecedorDAO implements InterfaceDAO<Fornecedor> {
     @Override
     public List<Fornecedor> retrieve() {
         List<Fornecedor> fornecedores;
-        fornecedores = entityManager.createQuery("SELECT id, nome, fone1, fone2, complementoEndereco, email, dataCadastro, observacao, status, cnpj, cpf, rg,inscEstadual, contato, razaoSocial, endereco_id FROM fornecedor", Fornecedor.class).getResultList();
+        fornecedores = entityManager.createQuery("SELECT f FROM fornecedor f", Fornecedor.class).getResultList();
         return fornecedores;
     }
 

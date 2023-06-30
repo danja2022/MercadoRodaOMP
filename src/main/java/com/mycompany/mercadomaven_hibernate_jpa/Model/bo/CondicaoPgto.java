@@ -19,7 +19,7 @@ public class CondicaoPgto implements Serializable{
     @Column
     private int numeroParcelas;
     @Column
-    private String diaPrimeiraParcela;
+    private int diaPrimeiraParcela;
     @Column
     private int diaEntreParcela;
     @Column
@@ -28,7 +28,7 @@ public class CondicaoPgto implements Serializable{
     public CondicaoPgto() {
     }
 
-    public CondicaoPgto(int id, String descricaoCondicao, int numeroParcelas, String diaPrimeiraParcela, int diaEntreParcela, char status) {
+    public CondicaoPgto(int id, String descricaoCondicao, int numeroParcelas, int diaPrimeiraParcela, int diaEntreParcela, char status) {
         this.id = id;
         this.descricaoCondicao = descricaoCondicao;
         this.numeroParcelas = numeroParcelas;
@@ -62,11 +62,11 @@ public class CondicaoPgto implements Serializable{
         this.numeroParcelas = numeroParcelas;
     }
 
-    public String getDiasPrimeiraParcela() {
+    public int getDiasPrimeiraParcela() {
         return diaPrimeiraParcela;
     }
 
-    public void setDiasPrimeiraParcela(String diasPrimeiraParcela) {
+    public void setDiasPrimeiraParcela(int diasPrimeiraParcela) {
         this.diaPrimeiraParcela = diasPrimeiraParcela;
     }
 

@@ -17,7 +17,7 @@ public class Cliente extends Pessoa {
     private char sexo;
     @Column
     @Temporal(TemporalType.DATE)
-    private Date dtNascimento;
+    private Date dataNascimento;
 
     public Cliente() {
 
@@ -48,11 +48,11 @@ public class Cliente extends Pessoa {
     }
 
     public Date getDtNascimento() {
-        return dtNascimento;
+        return dataNascimento;
     }
 
     public void setDtNascimento(Date dtNascimento) {
-        this.dtNascimento = dtNascimento;
+        this.dataNascimento = dtNascimento;
     }
 
     @Override

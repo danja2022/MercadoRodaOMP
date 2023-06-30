@@ -23,10 +23,7 @@ public class Fornecedor extends Pessoa {
     @Column
     private String rg;
 
-    @JoinColumn
-    @ManyToOne
-    private Compra compra;
-    
+ 
     public Fornecedor() {
         
     }

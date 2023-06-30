@@ -1,6 +1,5 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Controler;
 
-
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.ClasseDAO;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.MarcaDAO;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.ProdutoDAO;
@@ -23,7 +22,11 @@ import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroMarca;
 import com.mycompany.mercadomaven_hibernate_jpa.view.FoCadastroProduto;
 import com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControllerCadastroProduto implements ActionListener {
 
@@ -69,7 +72,6 @@ public class ControllerCadastroProduto implements ActionListener {
     public void setComboBox() {
         List<Marca> listaMarca = new ArrayList<>();
         List<Classe> listaClasse = new ArrayList<>();
-        
 
         listaMarca = MarcaService.buscar();
         listaClasse = ClasseService.buscar();
@@ -91,11 +93,10 @@ public class ControllerCadastroProduto implements ActionListener {
     }
 
     public void atualizaCampos(int codigo) {
-
+        setComboBox();
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telaCadProduto.getjPanel4());
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadProduto.getPnCentro());
         Produto produto = new Produto();
-        
 
         produto = ProdutoService.buscar(codigo);
 
@@ -109,7 +110,7 @@ public class ControllerCadastroProduto implements ActionListener {
         } else {
             telaCadProduto.getjRadioBtInativo().setSelected(true);
         }
-        DateFormat data = new SimpleDateFormat("dd-mm-yyyy");
+        DateFormat data = new SimpleDateFormat("dd-MM-yyyy");
         telaCadProduto.getjTextFieldBarraEntrada().setText(produto.getBarraEntrada());
         telaCadProduto.getjTextFieldBarraSaida().setText(produto.getBarraSaida());
         telaCadProduto.getjFTextFieldDtCadastro().setText(data.format(produto.getDataCadastro()));
@@ -125,6 +126,7 @@ public class ControllerCadastroProduto implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent acao) {
         if (acao.getSource() == telaCadProduto.getBtNovo()) {
+            setComboBox();
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telaCadProduto.getjPanel4());
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadProduto.getPnCentro());
 
@@ -202,13 +204,33 @@ public class ControllerCadastroProduto implements ActionListener {
 
                 Marca marca = new Marca();
                 Classe classe = new Classe();
-                
+
                 classe = ClasseService.buscar(telaCadProduto.getjComboBoxClasse().getSelectedItem().toString());
                 marca = MarcaService.buscar(telaCadProduto.getjComboBoxMarca().getSelectedItem().toString());
                 produto.setMarca(marca);
                 produto.setClasse(classe);
 
-                
+                DateFormat sdata = new SimpleDateFormat("dd-MM-yyyy");
+                if (telaCadProduto.getjFTextFieldDtCadastro().getText().trim().equalsIgnoreCase("")) {
+
+                    Date date = new Date();
+                    String strData;
+                    strData = sdata.format(date);
+
+                    try {
+                        produto.setDataCadastro(sdata.parse(strData));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } else {
+                    try {
+                        produto.setDataCadastro(sdata.parse(telaCadProduto.getjFTextFieldDtCadastro().getText()));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
                 if (telaCadProduto.getjTextFieldId().getText().trim().equalsIgnoreCase("")) {
                     ProdutoService.criar(produto);
                 } else {
@@ -216,7 +238,7 @@ public class ControllerCadastroProduto implements ActionListener {
                     ProdutoService.atualizar(produto);
 
                 }
-
+                setComboBox();
                 com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadProduto.getjPanel4());
                 com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadProduto.getPnCentro());
             }
@@ -242,15 +264,16 @@ public class ControllerCadastroProduto implements ActionListener {
         } else if (acao.getSource() == telaCadProduto.getBtDeletar()) {
             if (!telaCadProduto.getjTextFieldId().getText().trim().equalsIgnoreCase("")) {
                 Produto produto = new Produto();
-                
+
                 produto = ProdutoService.buscar(Integer.parseInt(telaCadProduto.getjTextFieldId().getText()));
 
                 if (ProdutoService.excluir(produto) == -1) {
                     JOptionPane.showMessageDialog(null, "Erro ao deletar.");
                 } else {
+                    setComboBox();
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadProduto.getjPanel4());
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadProduto.getPnCentro());
-                    setComboBox();
+
                 }
 
             }

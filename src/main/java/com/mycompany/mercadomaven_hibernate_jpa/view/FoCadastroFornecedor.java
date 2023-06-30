@@ -38,13 +38,13 @@ public final class FoCadastroFornecedor extends javax.swing.JFrame {
         MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
         MaskFormatter maskTelefone1 = new MaskFormatter("(##) #####-####");
         MaskFormatter maskTelefone2 = new MaskFormatter("(##) #####-####");
-        MaskFormatter maskData = new MaskFormatter("##/##/####");
+      
 
         maskCPF.install(ftfCPF);
         maskTelefone1.install(ftfTelefone1);
         maskTelefone2.install(ftfTelefone2);
         maskCNPJ.install(ftfCNPJ);
-        maskData.install(jFtDataCadastro);
+      
     }
 
     
@@ -168,6 +168,15 @@ public final class FoCadastroFornecedor extends javax.swing.JFrame {
         this.ftfTelefone2 = ftfTelefone2;
     }
 
+    public JPanel getPnEndereco() {
+        return pnEndereco;
+    }
+
+    public void setPnEndereco(JPanel pnEndereco) {
+        this.pnEndereco = pnEndereco;
+    }
+
+    
     public JTextField getjTextFieldIdCadFornecedor() {
         return jTextFieldIdCadFornecedor;
     }

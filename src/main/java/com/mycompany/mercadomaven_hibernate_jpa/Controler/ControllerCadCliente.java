@@ -18,6 +18,7 @@ import com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,10 +37,10 @@ public class ControllerCadCliente implements ActionListener {
         telaCadCliente.getjComboBoxCep().addActionListener(this);
         telaCadCliente.getjBtCadCep().addActionListener(this);
         telaCadCliente.getBtDeletar().addActionListener(this);
-
+        this.setComboBox();
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadCliente.getjPanel4());
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadCliente.getPnCentro());
-        this.setComboBox();
+        com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadCliente.getPnEndereco());
 
     }
 
@@ -47,9 +48,13 @@ public class ControllerCadCliente implements ActionListener {
         Cliente cliente = new Cliente();
 
         cliente = ClienteService.buscar(codigo);
-
+        this.setComboBox();
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telaCadCliente.getjPanel4());
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadCliente.getPnCentro());
+        com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadCliente.getPnEndereco());
+
+        DateFormat sdata = new SimpleDateFormat("dd-MM-yyyy");
+        telaCadCliente.getFtfDtNasc().setText(sdata.format(cliente.getDtNascimento()));
 
         telaCadCliente.getTfNome().setText(cliente.getNome());
         telaCadCliente.getjTfId().setText(cliente.getId() + "");
@@ -59,7 +64,7 @@ public class ControllerCadCliente implements ActionListener {
             telaCadCliente.getjRadioBtInativo().setSelected(true);
         }
         DateFormat data = new SimpleDateFormat("dd-mm-yyyy");
-        
+
         telaCadCliente.getFtfDtNasc().setText(data.format(cliente.getDtNascimento()));
         telaCadCliente.getFtfCPF().setText(cliente.getCpf());
         telaCadCliente.getTfRG().setText(cliente.getRg());
@@ -168,13 +173,19 @@ public class ControllerCadCliente implements ActionListener {
     public void actionPerformed(ActionEvent acao) {
 
         if (acao.getSource() == telaCadCliente.getBtNovo()) {
+
+            setComboBox();
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telaCadCliente.getjPanel4());
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadCliente.getPnCentro());
+            com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(true, telaCadCliente.getPnEndereco());
+
             telaCadCliente.getjTfId().setEnabled(false);
 
         } else if (acao.getSource() == telaCadCliente.getBtCancelar()) {
+            setComboBox();
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadCliente.getjPanel4());
             com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadCliente.getPnCentro());
+            com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadCliente.getPnEndereco());
 
         } else if (acao.getSource() == telaCadCliente.getBtSalvar()) {
 
@@ -192,7 +203,7 @@ public class ControllerCadCliente implements ActionListener {
                 JOptionPane.showMessageDialog(null, "O campo Email é obrigatório!");
             } else {
                 DateFormat data = new SimpleDateFormat("dd-mm-yyyy");
-                
+
                 Cliente cliente = new Cliente();
                 cliente.setNome(telaCadCliente.getTfNome().getText());
                 try {
@@ -239,6 +250,18 @@ public class ControllerCadCliente implements ActionListener {
                 cliente.setEndereco(endereco);
                 cliente.setObservacao(telaCadCliente.getjTextArea1().getText().trim());
 
+                DateFormat sdata = new SimpleDateFormat("dd-MM-yyyy");
+
+                Date date = new Date();
+                String strData;
+                strData = sdata.format(date);
+
+                try {
+                    cliente.setDtCadastro(sdata.parse(strData));
+                } catch (ParseException ex) {
+                    Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 if (telaCadCliente.getjTfId().getText().trim().equalsIgnoreCase("")) {
                     ClienteService.criar(cliente);
                 } else {
@@ -247,8 +270,11 @@ public class ControllerCadCliente implements ActionListener {
                 }
 
                 //persistir o objeto de bairro criado
+                setComboBox();
                 com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadCliente.getjPanel4());
                 com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadCliente.getPnCentro());
+                com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadCliente.getPnEndereco());
+
             }
 
         } else if (acao.getSource() == telaCadCliente.getBtBuscar()) {
@@ -283,9 +309,11 @@ public class ControllerCadCliente implements ActionListener {
                 if (ClienteService.excluir(cliente) == -1) {
                     JOptionPane.showMessageDialog(null, "Erro ao deletar.");
                 } else {
+                    setComboBox();
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telaCadCliente.getjPanel4());
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadCliente.getPnCentro());
-                    setComboBox();
+                    com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telaCadCliente.getPnEndereco());
+
                 }
             }
         }

@@ -173,6 +173,7 @@ public class FoCadastroMarca extends javax.swing.JFrame {
 
         btNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mercadomaven_hibernate_jpa/imagens/Create.png"))); // NOI18N
         btNovo.setText("Novo");
+        btNovo.setActionCommand("0");
         btNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btNovoActionPerformed(evt);
@@ -182,6 +183,7 @@ public class FoCadastroMarca extends javax.swing.JFrame {
 
         btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mercadomaven_hibernate_jpa/imagens/Download.png"))); // NOI18N
         btSalvar.setText("Salvar");
+        btSalvar.setActionCommand("1");
         btSalvar.setEnabled(false);
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,6 +194,7 @@ public class FoCadastroMarca extends javax.swing.JFrame {
 
         btCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mercadomaven_hibernate_jpa/imagens/Cancel.png"))); // NOI18N
         btCancelar.setText("Cancelar");
+        btCancelar.setActionCommand("1");
         btCancelar.setEnabled(false);
         btCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,6 +205,7 @@ public class FoCadastroMarca extends javax.swing.JFrame {
 
         btBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mercadomaven_hibernate_jpa/imagens/Eye.png"))); // NOI18N
         btBuscar.setText("Buscar");
+        btBuscar.setActionCommand("0");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBuscarActionPerformed(evt);
@@ -211,6 +215,7 @@ public class FoCadastroMarca extends javax.swing.JFrame {
 
         btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mercadomaven_hibernate_jpa/imagens/Exit.png"))); // NOI18N
         btSair.setText("Sair");
+        btSair.setActionCommand("0");
         btSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSairActionPerformed(evt);
@@ -220,6 +225,7 @@ public class FoCadastroMarca extends javax.swing.JFrame {
 
         btDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/mycompany/mercadomaven_hibernate_jpa/imagens/Bomb.png"))); // NOI18N
         btDeletar.setText("Deletar");
+        btDeletar.setActionCommand("1");
         btDeletar.setEnabled(false);
         jPanel4.add(btDeletar);
 

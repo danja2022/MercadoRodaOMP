@@ -71,7 +71,7 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
     @Override
     public List<Cliente> retrieve() {
         List<Cliente> clientes;
-        clientes = entityManager.createQuery("SELECT id, nome, fone1, fone2, complemento, email, dataCadastro, observacao, status, cpf, rg, dataNascimento, endereco_id, sexo FROM cliente", Cliente.class).getResultList();
+        clientes = entityManager.createQuery("SELECT c FROM cliente c", Cliente.class).getResultList();
         return clientes;
     }
 

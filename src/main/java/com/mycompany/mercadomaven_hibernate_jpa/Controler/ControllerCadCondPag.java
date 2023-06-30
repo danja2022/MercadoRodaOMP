@@ -49,7 +49,7 @@ public class ControllerCadCondPag implements ActionListener {
         telaCadCondicaoPagamento.getjTfDescricao().setText(condicaoPgto.getDescricaoCondicao());
         telaCadCondicaoPagamento.getjTfDiaEntreParcela().setText(condicaoPgto.getDiaEntreParcela() + "");
         telaCadCondicaoPagamento.getjTfNumParcelas().setText(condicaoPgto.getNumeroParcelas() + "");
-        telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().setText(dateToString(condicaoPgto.getDiasPrimeiraParcela()));
+        telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().setText(condicaoPgto.getDiasPrimeiraParcela()+"");
 
         if (condicaoPgto.getStatus() == 'A') {
             telaCadCondicaoPagamento.getjRadioBtAtivo().setSelected(true);
@@ -177,7 +177,7 @@ public class ControllerCadCondPag implements ActionListener {
                 condicaoPgto.setDescricaoCondicao(telaCadCondicaoPagamento.getjTfDescricao().getText());
                 condicaoPgto.setDiaEntreParcela(Integer.parseInt(telaCadCondicaoPagamento.getjTfDiaEntreParcela().getText()));
                 
-               // condicaoPgto.setDiasPrimeiraParcela(stringToDate(telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().getText().trim()));
+                condicaoPgto.setDiasPrimeiraParcela(Integer.parseInt(telaCadCondicaoPagamento.getjFTfDiaPrimeiraParcela().getText().trim()));
                 condicaoPgto.setNumeroParcelas(Integer.parseInt(telaCadCondicaoPagamento.getjTfNumParcelas().getText()));
 
                 if (telaCadCondicaoPagamento.getjRadioBtAtivo().isSelected()) {

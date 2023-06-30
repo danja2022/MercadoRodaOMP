@@ -33,10 +33,7 @@ public class FoCadastroProduto extends javax.swing.JFrame {
         
         initComponents();
         
-        MaskFormatter data = new MaskFormatter();
-        data.setMask("##/##/####");
-        
-        data.install(jFTextFieldDtCadastro);
+       
         
     }
 

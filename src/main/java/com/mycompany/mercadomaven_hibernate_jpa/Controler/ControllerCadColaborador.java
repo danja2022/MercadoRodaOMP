@@ -1,6 +1,5 @@
 package com.mycompany.mercadomaven_hibernate_jpa.Controler;
 
-
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.BairroDAO;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.ColaboradorDAO;
 import com.mycompany.mercadomaven_hibernate_jpa.Model.DAO.EnderecoDAO;
@@ -48,8 +47,8 @@ public class ControllerCadColaborador implements ActionListener {
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnEndereco());
 
     }
-    
-    public void atualizaEndereco(int codigo){
+
+    public void atualizaEndereco(int codigo) {
         Endereco endereco = new Endereco();
         endereco = EnderecoService.buscar(codigo);
         telacadColaborador.getjCbCep().setSelectedItem(endereco.getCep());
@@ -57,10 +56,10 @@ public class ControllerCadColaborador implements ActionListener {
 
     public void atualizaCampos(int codigo) {
         Colaborador colaborador = new Colaborador();
-        
+
         colaborador = ColaboradorService.buscar(codigo);
         Endereco endereco = new Endereco();
-        
+
         endereco = EnderecoService.buscar(colaborador.getEndereco().getId());
         //Rodrigo Ultils
         com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(false, telacadColaborador.getjPanel4());
@@ -90,8 +89,6 @@ public class ControllerCadColaborador implements ActionListener {
 
     public void setComboBox() {
         List<Endereco> listaEndereco = new ArrayList<>();
-
-        
 
         listaEndereco = EnderecoService.buscar();
 
@@ -160,7 +157,6 @@ public class ControllerCadColaborador implements ActionListener {
             } else if (Arrays.equals(telacadColaborador.getPfSenha().getPassword(), telacadColaborador.getPfSenhaConfirm().getPassword())) {
                 Colaborador colaborador = new Colaborador();
 
-                
                 colaborador.setNome(telacadColaborador.getTfNome().getText());
                 colaborador.setEmail(telacadColaborador.getTfEmail().getText());
                 colaborador.setFone(telacadColaborador.getFtfTelefone1().getText());
@@ -182,33 +178,44 @@ public class ControllerCadColaborador implements ActionListener {
                 colaborador.setComplementoEndereco(telacadColaborador.getTfComplemento().getText());
 
                 Endereco endereco = new Endereco();
-             
+
                 endereco = EnderecoService.buscar(telacadColaborador.getjCbCep().getSelectedItem().toString());
                 colaborador.setEndereco(endereco);
                 // Para salvar no banco corretamente Rodrigo
                 DateFormat sdata = new SimpleDateFormat("dd-MM-yyyy");
-                Date date = new Date();
-                String strData;
-                strData = sdata.format(date);
-                
-                try {
-                    colaborador.setDtCadastro(sdata.parse(strData));
-                } catch (ParseException ex) {
-                    Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                if (telacadColaborador.getFtDataCadastro().getText().trim().equalsIgnoreCase("")) {
+                    
+                    Date date = new Date();
+                    String strData;
+                    strData = sdata.format(date);
+
+                    try {
+                        colaborador.setDtCadastro(sdata.parse(strData));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }else {
+                    try {
+                        colaborador.setDtCadastro(sdata.parse(telacadColaborador.getFtDataCadastro().getText()));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ControllerCadColaborador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-                
+
+             
 
                 if (telacadColaborador.gettFId().getText().trim().equalsIgnoreCase("")) {
                     ColaboradorService.criar(colaborador);
-                            
+
                 } else {
                     colaborador.setId(Integer.parseInt(telacadColaborador.gettFId().getText()));
                     ColaboradorService.atualizar(colaborador);
                 }
 
-               com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telacadColaborador.getjPanel4());
-               com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnCentro());
-               com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnEndereco());
+                com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telacadColaborador.getjPanel4());
+                com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnCentro());
+                com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnEndereco());
             } else {
                 JOptionPane.showMessageDialog(null, "As Senhas não conferem");
             }
@@ -224,7 +231,7 @@ public class ControllerCadColaborador implements ActionListener {
         } else if (acao.getSource() == telacadColaborador.getjCbCep()) {
             if (telacadColaborador.getjCbCep().getSelectedItem() != null) {
                 Endereco endereco = new Endereco();
-                
+
                 endereco = EnderecoService.buscar(telacadColaborador.getjCbCep().getSelectedItem().toString());
                 telacadColaborador.getTfBairro().setText(endereco.getBairro().getDescricao());
                 telacadColaborador.getTfCidade().setText(endereco.getCidade().getDescricao());
@@ -238,7 +245,7 @@ public class ControllerCadColaborador implements ActionListener {
         } else if (acao.getSource() == telacadColaborador.getBtDeletar()) {
             if (!telacadColaborador.gettFId().getText().trim().equalsIgnoreCase("")) {
                 Colaborador colaborador = new Colaborador();
-              
+
                 colaborador = ColaboradorService.buscar(Integer.parseInt(telacadColaborador.gettFId().getText()));
 
                 if (ColaboradorService.excluir(colaborador) == -1) {
@@ -248,7 +255,7 @@ public class ControllerCadColaborador implements ActionListener {
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ativa(true, telacadColaborador.getjPanel4());
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnCentro());
                     com.mycompany.mercadomaven_hibernate_jpa.utilities.Utils.ligaDesliga(false, telacadColaborador.getPnEndereco());
-                    
+
                 }
             }
         }

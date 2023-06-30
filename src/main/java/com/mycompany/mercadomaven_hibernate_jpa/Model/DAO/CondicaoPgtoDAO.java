@@ -69,7 +69,7 @@ public class CondicaoPgtoDAO implements InterfaceDAO<CondicaoPgto> {
     @Override
     public List<CondicaoPgto> retrieve() {
         List<CondicaoPgto> condicaoPgtos;
-        condicaoPgtos = entityManager.createQuery("SELECT cp condicaopagamento cp", CondicaoPgto.class).getResultList();
+        condicaoPgtos = entityManager.createQuery("SELECT cp FROM condicaopagamento cp", CondicaoPgto.class).getResultList();
         return condicaoPgtos;
 
     }
